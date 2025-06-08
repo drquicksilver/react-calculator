@@ -9,6 +9,12 @@ enum Operation {
   Divide = '➗',
 }
 
+// SVG Icon Components
+const PlusIcon = () => <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"></path></svg>;
+const MinusIcon = () => <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path></svg>;
+const MultiplyIcon = () => <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg>;
+const DivideIcon = () => <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 19.5l15-15"></path></svg>;
+
 export default function Home() {
   const [displayValue, setDisplayValue] = useState<string>("0");
   const [previousValue, setPreviousValue] = useState<number | null>(null);
@@ -133,29 +139,29 @@ export default function Home() {
         </div>
         <div className="buttons-grid grid grid-cols-4 gap-2">
           {/* Row 1 */}
-          <button onClick={handleClearClick} className="p-2 bg-gray-300 rounded text-xl">AC</button>
-          <button onClick={handleSignToggleClick} className="p-2 bg-gray-300 rounded text-xl">+/-</button>
-          <button onClick={handlePercentageClick} className="p-2 bg-gray-300 rounded text-xl">%</button>
-          <button onClick={() => handleOperatorClick(Operation.Divide)} className="p-2 bg-orange-400 text-white rounded text-xl">➗</button>
+          <button onClick={handleClearClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">AC</button>
+          <button onClick={handleSignToggleClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">+/-</button>
+          <button onClick={handlePercentageClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">%</button>
+          <button onClick={() => handleOperatorClick(Operation.Divide)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><DivideIcon /></button>
           {/* Row 2 */}
-          <button onClick={() => handleNumberClick('7')} className="p-2 bg-gray-300 rounded text-xl">7</button>
-          <button onClick={() => handleNumberClick('8')} className="p-2 bg-gray-300 rounded text-xl">8</button>
-          <button onClick={() => handleNumberClick('9')} className="p-2 bg-gray-300 rounded text-xl">9</button>
-          <button onClick={() => handleOperatorClick(Operation.Multiply)} className="p-2 bg-orange-400 text-white rounded text-xl">x</button>
+          <button onClick={() => handleNumberClick('7')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">7</button>
+          <button onClick={() => handleNumberClick('8')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">8</button>
+          <button onClick={() => handleNumberClick('9')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">9</button>
+          <button onClick={() => handleOperatorClick(Operation.Multiply)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><MultiplyIcon /></button>
           {/* Row 3 */}
-          <button onClick={() => handleNumberClick('4')} className="p-2 bg-gray-300 rounded text-xl">4</button>
-          <button onClick={() => handleNumberClick('5')} className="p-2 bg-gray-300 rounded text-xl">5</button>
-          <button onClick={() => handleNumberClick('6')} className="p-2 bg-gray-300 rounded text-xl">6</button>
-          <button onClick={() => handleOperatorClick(Operation.Subtract)} className="p-2 bg-orange-400 text-white rounded text-xl">-</button>
+          <button onClick={() => handleNumberClick('4')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">4</button>
+          <button onClick={() => handleNumberClick('5')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">5</button>
+          <button onClick={() => handleNumberClick('6')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">6</button>
+          <button onClick={() => handleOperatorClick(Operation.Subtract)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><MinusIcon /></button>
           {/* Row 4 */}
-          <button onClick={() => handleNumberClick('1')} className="p-2 bg-gray-300 rounded text-xl">1</button>
-          <button onClick={() => handleNumberClick('2')} className="p-2 bg-gray-300 rounded text-xl">2</button>
-          <button onClick={() => handleNumberClick('3')} className="p-2 bg-gray-300 rounded text-xl">3</button>
-          <button onClick={() => handleOperatorClick(Operation.Add)} className="p-2 bg-orange-400 text-white rounded text-xl">+</button>
+          <button onClick={() => handleNumberClick('1')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">1</button>
+          <button onClick={() => handleNumberClick('2')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">2</button>
+          <button onClick={() => handleNumberClick('3')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">3</button>
+          <button onClick={() => handleOperatorClick(Operation.Add)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><PlusIcon /></button>
           {/* Row 5 */}
-          <button onClick={() => handleNumberClick('0')} className="col-span-2 p-2 bg-gray-300 rounded text-xl">0</button>
-          <button onClick={handleDecimalClick} className="p-2 bg-gray-300 rounded text-xl">.</button>
-          <button onClick={handleEqualClick} className="p-2 bg-orange-400 text-white rounded text-xl">=</button>
+          <button onClick={() => handleNumberClick('0')} className="col-span-2 p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">0</button>
+          <button onClick={handleDecimalClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">.</button>
+          <button onClick={handleEqualClick} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center">=</button>
         </div>
       </div>
     </div>
