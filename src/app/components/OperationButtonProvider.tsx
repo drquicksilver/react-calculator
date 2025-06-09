@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { Operation } from '../page'; // Assuming Operation enum is in page.tsx
+import { Operation } from '../types';
 
 export type OperationClickHandler = (operation: Operation) => void;
 
