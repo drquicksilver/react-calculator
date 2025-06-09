@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTheme } from './contexts/ThemeContext';
 import ThemeSwitcher from './components/ThemeSwitcher'; // Import ThemeSwitcher
 import NumberButton from './components/NumberButton';
 import { NumberButtonProvider } from './components/NumberButtonProvider';
@@ -27,6 +28,7 @@ export default function Home() {
   const [previousValue, setPreviousValue] = useState<number | null>(null);
   const [operator, setOperator] = useState<Operation | null>(null);
   const [waitingForOperand, setWaitingForOperand] = useState<boolean>(false);
+  const { theme } = useTheme();
 
   const handleSpecialClick = (value: string) => {
     switch (value) {
@@ -193,7 +195,10 @@ export default function Home() {
           <NumberButton value="3" />
                 <OperationButton operation={Operation.Add} icon={<PlusIcon />} />
           {/* Row 5 */}
-          <NumberButton value="0" className="col-span-2" />
+          <NumberButton
+            value="0"
+            className={`col-span-2 ${theme === 'typewriter' ? 'justify-self-center' : ''}`}
+          />
                 <SpecialButton value="." />
                 <SpecialButton value="=" className="bg-orange-400 hover:bg-orange-500 active:bg-orange-600 text-white" />
               </div>

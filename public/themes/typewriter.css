@@ -6,13 +6,14 @@
 
   --primary: #5A7D7C; /* Muted teal/blue, for operation buttons */
   --primary-text-color: var(--background); /* Text color for primary buttons, e.g., paper color */
-  --primary-border-color: #4A6D6C; /* Darker border for primary buttons */
+  --rim-color: #F5F5F5; /* Light silver rim color */
+  --primary-border-color: var(--rim-color); /* Silver rim for primary buttons */
   --primary-hover-bg: #4A6D6C; /* Darker teal/blue for primary hover */
   --primary-active-bg: #3A5D5C; /* Even darker for primary active */
 
   --secondary: #D8CFC6; /* Lighter beige, for number/special buttons */
   --secondary-text-color: var(--foreground); /* Ink color for text on secondary buttons */
-  --secondary-border-color: #B0A090; /* Slightly darker than button bg for rim */
+  --secondary-border-color: var(--rim-color); /* Silver rim for secondary buttons */
   --secondary-hover-bg: #C8BCAE; /* Slightly darker beige on hover */
   --secondary-active-bg: #B8ADA0; /* Darker beige for active state */
 
@@ -28,9 +29,9 @@
   --button-background-color: var(--secondary);
   --button-border-color: var(--secondary-border-color);
   --button-shadow:
-    1px 1px 0px #BFBFBF, /* Outer bottom-right highlight */
-    2px 2px 0px var(--button-border-color), /* Main rim shadow */
-    inset 0 0 0 1px var(--foreground); /* Inner dark line for key top */
+    0px 2px 0px #FFFFFF, /* Bright top rim */
+    0px 4px 0px #999999, /* Darker bottom rim for raised effect */
+    inset 0 0 0 2px var(--foreground); /* Inner dark line for key top */
   --button-hover-background-color: var(--secondary-hover-bg);
   --button-active-background-color: var(--secondary-active-bg);
 }
@@ -41,7 +42,7 @@
   font-family: var(--font-button);
   color: var(--button-text-color); /* Default, will be overridden by specific button rules */
   background-color: var(--button-background-color); /* Default, will be overridden */
-  border: 1px solid var(--button-border-color); /* Default, will be overridden */
+  border: 2px solid var(--button-border-color); /* Thicker rim */
   box-shadow: var(--button-shadow); /* Default, might be overridden by specific button rules if their rim needs different shadow colors */
 
   /* Circular button style */
@@ -84,9 +85,9 @@
   border-color: var(--primary-border-color);
   /* Adjust shadow if primary color needs different rim effect */
   box-shadow:
-    1px 1px 0px #7A9D9C, /* Lighter shade of primary for highlight */
-    2px 2px 0px var(--primary-border-color), /* Main rim shadow for primary */
-    inset 0 0 0 1px var(--background); /* Inner line, perhaps paper color for contrast */
+    0px 2px 0px #FFFFFF, /* Bright top rim */
+    0px 4px 0px #999999, /* Darker bottom rim for raised effect */
+    inset 0 0 0 2px var(--background); /* Inner line, perhaps paper color for contrast */
 }
 
 .operation-button:hover {
