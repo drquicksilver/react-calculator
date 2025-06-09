@@ -13,7 +13,7 @@ const baseClasses = "btn-base btn-hover btn-active p-2 active:scale-95 transitio
 export default function OperationButton({ operation, icon, className }: OperationButtonProps) {
   const onOperationClick = useOperationClick();
   return (
-    <button onClick={() => onOperationClick(operation)} className={`${baseClasses} ${className ?? ''}`}>
+    <button onClick={() => onOperationClick(operation)} className={`${baseClasses} operation-button ${className ?? ''}`}>
       {icon}
     </button>
   );

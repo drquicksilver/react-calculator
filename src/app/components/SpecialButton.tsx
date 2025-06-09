@@ -12,7 +12,7 @@ const baseClasses = "btn-base btn-hover btn-active p-2 active:scale-95 transitio
 export default function SpecialButton({ value, className, children }: SpecialButtonProps) {
   const onSpecialClick = useSpecialClick();
   return (
-    <button onClick={() => onSpecialClick(value)} className={`${baseClasses} ${className ?? ''}`}>
+    <button onClick={() => onSpecialClick(value)} className={`${baseClasses} special-button ${className ?? ''}`}>
       {children ?? value}
     </button>
   );

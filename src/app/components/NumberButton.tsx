@@ -11,6 +11,6 @@ const baseClasses = "btn-base btn-hover btn-active p-2 active:scale-95 transitio
 export default function NumberButton({ value, className }: NumberButtonProps) {
   const onNumberClick = useNumberClick();
   return (
-    <button onClick={() => onNumberClick(value)} className={`${baseClasses} ${className ?? ''}`}>{value}</button>
+    <button onClick={() => onNumberClick(value)} className={`${baseClasses} number-button ${className ?? ''}`}>{value}</button>
   );
 }

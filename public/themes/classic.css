@@ -1,17 +1,88 @@
 :root {
   --background: #f0f0f0; /* Light gray */
   --foreground: #333333; /* Dark gray */
+
+  /* Theme-wide colors */
   --primary: #ffa500; /* Orange */
-  --secondary: #6c757d; /* Medium gray */
+  --secondary: #6c757d; /* Medium gray - could be used for other UI elements */
   --accent: #adb5bd; /* Light gray accent */
 
-  --font-body: 'Times New Roman', Times, serif; /* A more classic font */
-  --font-button: 'Arial Black', Arial, sans-serif; /* Bold button font */
+  /* Fonts */
+  --font-body: 'Times New Roman', Times, serif;
+  --font-button: 'Arial Black', Arial, sans-serif;
 
-  --button-background-color: var(--primary);
-  --button-text-color: #ffffff; /* White text on orange button */
-  --button-border-color: var(--primary);
+  /* Default button values (used by .btn-base if not overridden by specific classes) */
+  /* Operation buttons will effectively use these as their primary orange styling */
+  --button-background-color: var(--primary); /* Default to orange */
+  --button-text-color: #ffffff; /* Default to white text */
+  --button-border-color: var(--primary); /* Default to orange border */
   --button-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  --button-hover-background-color: #cc8400; /* Darker Orange */
-  --button-active-background-color: #a36a00; /* Even Darker Orange */
+  --button-hover-background-color: #cc8400; /* Darker Orange for default hover */
+  --button-active-background-color: #a36a00; /* Even Darker Orange for default active */
+
+  /* Specific colors for grey buttons in Classic theme */
+  --classic-grey-button-bg: #D3D3D3;      /* LightGray */
+  --classic-grey-button-text-color: #1c1c1c; /* Nearly black for good contrast on light grey */
+  --classic-grey-button-border-color: #B0B0B0; /* Slightly darker grey for border */
+  --classic-grey-button-hover-bg: #BEBEBE;  /* MediumLightGray for hover */
+  --classic-grey-button-active-bg: #A8A8A8; /* DarkerMediumLightGray for active */
 }
+
+/* --- Specific Button Styling for Classic Theme --- */
+
+/* Operation Buttons: Orange */
+.operation-button {
+  background-color: var(--button-background-color); /* Uses the default orange */
+  color: var(--button-text-color); /* Uses the default white text */
+  border-color: var(--button-border-color); /* Uses the default orange border */
+  /* Font and shadow are inherited from .btn-base which should use the variables above */
+}
+
+.operation-button:hover {
+  background-color: var(--button-hover-background-color); /* Darker orange */
+}
+
+.operation-button:active {
+  background-color: var(--button-active-background-color); /* Even darker orange */
+}
+
+/* Number Buttons: Grey */
+.number-button {
+  background-color: var(--classic-grey-button-bg);
+  color: var(--classic-grey-button-text-color);
+  border-color: var(--classic-grey-button-border-color);
+}
+
+.number-button:hover {
+  background-color: var(--classic-grey-button-hover-bg);
+}
+
+.number-button:active {
+  background-color: var(--classic-grey-button-active-bg);
+}
+
+/* Special Buttons: Grey (same as Number buttons) */
+.special-button {
+  background-color: var(--classic-grey-button-bg);
+  color: var(--classic-grey-button-text-color);
+  border-color: var(--classic-grey-button-border-color);
+}
+
+.special-button:hover {
+  background-color: var(--classic-grey-button-hover-bg);
+}
+
+.special-button:active {
+  background-color: var(--classic-grey-button-active-bg);
+}
+
+/* Ensure these specific button styles are applied on top of .btn-base.
+   Properties like padding, font-family, main shadow (if not overridden by border concerns),
+   and transitions from .btn-base in globals.css should still apply.
+   The .btn-base class in globals.css uses:
+   - font-family: var(--font-button); (Correctly Arial Black here)
+   - color: var(--button-text-color); (Overridden by specific rules)
+   - background-color: var(--button-background-color); (Overridden by specific rules)
+   - border: 1px solid var(--button-border-color); (border-color is overridden, style and width remain)
+   - box-shadow: var(--button-shadow); (This will apply to all buttons)
+*/
