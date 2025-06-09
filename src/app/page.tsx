@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import ThemeSwitcher from './components/ThemeSwitcher'; // Import ThemeSwitcher
 import NumberButton from './components/NumberButton';
 import { NumberButtonProvider } from './components/NumberButtonProvider';
 import OperationButton from './components/OperationButton';
@@ -161,6 +162,8 @@ export default function Home() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      {/* ThemeSwitcher can be placed here, or inside the calculator-container for better positioning relative to it */}
+      <ThemeSwitcher />
       <div className="calculator-container bg-white p-4 rounded shadow-lg w-80">
         <div className="display bg-gray-200 text-right p-2 rounded mb-4 text-3xl h-20 flex items-center justify-end">
           {displayValue}

@@ -3,6 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #007bff; /* Blue */
+  --secondary: #6c757d; /* Gray */
+  --accent: #17a2b8; /* Teal */
+
+  --font-body: Arial, Helvetica, sans-serif;
+  --font-button: Helvetica, Arial, sans-serif;
+
+  --button-background-color: var(--primary);
+  --button-text-color: #ffffff;
+  --button-border-color: var(--primary);
+  --button-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --button-hover-background-color: #0056b3; /* Darker Blue */
+  --button-active-background-color: #004085; /* Even Darker Blue */
 }
 
 @theme inline {
@@ -16,11 +29,39 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #0056b3; /* Darker Blue for dark mode */
+    --secondary: #495057; /* Darker Gray for dark mode */
+    --accent: #138496; /* Darker Teal for dark mode */
+
+    --button-background-color: var(--primary);
+    --button-text-color: #ffffff;
+    --button-border-color: var(--primary);
+    --button-hover-background-color: #003d80; /* Even Darker Blue for dark mode hover */
+    --button-active-background-color: #002752; /* Deepest Blue for dark mode active */
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+}
+
+/* Button base styles using CSS variables */
+.btn-base {
+  font-family: var(--font-button);
+  color: var(--button-text-color);
+  background-color: var(--button-background-color);
+  border: 1px solid var(--button-border-color); /* Optional: if you want borders */
+  box-shadow: var(--button-shadow);
+}
+
+/* Hover and Active states using CSS variables */
+.btn-hover:hover {
+  background-color: var(--button-hover-background-color);
+}
+
+.btn-active:active {
+  background-color: var(--button-active-background-color);
+  /* If you want to keep the scale effect, Tailwind's active:scale-95 is fine */
 }

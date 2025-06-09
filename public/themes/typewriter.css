@@ -1,0 +1,138 @@
+/* public/themes/typewriter.css */
+:root {
+  /* --- Typewriter Colors --- */
+  --background: #EAE0D5; /* Creamy paper */
+  --foreground: #2C2C2C; /* Dark, slightly faded ink */
+
+  --primary: #5A7D7C; /* Muted teal/blue, for operation buttons */
+  --primary-text-color: var(--background); /* Text color for primary buttons, e.g., paper color */
+  --primary-border-color: #4A6D6C; /* Darker border for primary buttons */
+  --primary-hover-bg: #4A6D6C; /* Darker teal/blue for primary hover */
+  --primary-active-bg: #3A5D5C; /* Even darker for primary active */
+
+  --secondary: #D8CFC6; /* Lighter beige, for number/special buttons */
+  --secondary-text-color: var(--foreground); /* Ink color for text on secondary buttons */
+  --secondary-border-color: #B0A090; /* Slightly darker than button bg for rim */
+  --secondary-hover-bg: #C8BCAE; /* Slightly darker beige on hover */
+  --secondary-active-bg: #B8ADA0; /* Darker beige for active state */
+
+  --accent: #C75D5D; /* Muted red, for specific highlights */
+
+  /* --- Fonts --- */
+  --font-body: 'Courier New', Courier, monospace;
+  --font-button: 'Courier New', Courier, monospace;
+
+  /* --- Button Base Variables (Typewriter Theme) --- */
+  /* These are defaults; specific button types will override many of these */
+  --button-text-color: var(--secondary-text-color);
+  --button-background-color: var(--secondary);
+  --button-border-color: var(--secondary-border-color);
+  --button-shadow:
+    1px 1px 0px #BFBFBF, /* Outer bottom-right highlight */
+    2px 2px 0px var(--button-border-color), /* Main rim shadow */
+    inset 0 0 0 1px var(--foreground); /* Inner dark line for key top */
+  --button-hover-background-color: var(--secondary-hover-bg);
+  --button-active-background-color: var(--secondary-active-bg);
+}
+
+/* --- General Button Styling (Typewriter Theme) --- */
+/* Overrides .btn-base from globals.css and applies to all buttons unless further specified */
+.btn-base {
+  font-family: var(--font-button);
+  color: var(--button-text-color); /* Default, will be overridden by specific button rules */
+  background-color: var(--button-background-color); /* Default, will be overridden */
+  border: 1px solid var(--button-border-color); /* Default, will be overridden */
+  box-shadow: var(--button-shadow); /* Default, might be overridden by specific button rules if their rim needs different shadow colors */
+
+  /* Circular button style */
+  width: 56px;  /* Fixed width */
+  height: 56px; /* Fixed height */
+  border-radius: 50%; /* Make it circular */
+  padding: 0; /* Remove padding to rely on flexbox centering for content */
+
+  font-weight: bold;
+  /* Flex properties for centering are applied by Tailwind classes on the component */
+  /* e.g. flex items-center justify-center */
+  transition: transform 0.05s ease-out, box-shadow 0.05s ease-out, background-color 0.1s ease;
+}
+
+/* --- Number Buttons & Special Buttons (Typewriter Theme) --- */
+/* These use the --secondary colors by default through .btn-base now */
+.number-button,
+.special-button {
+  background-color: var(--secondary);
+  color: var(--secondary-text-color);
+  border-color: var(--secondary-border-color);
+  /* Shadow is inherited from .btn-base, which uses --button-border-color (effectively --secondary-border-color here) */
+}
+
+.number-button:hover,
+.special-button:hover {
+  background-color: var(--secondary-hover-bg);
+}
+
+.number-button:active,
+.special-button:active {
+  background-color: var(--secondary-active-bg);
+  /* Sinking animation is applied through .btn-active:active below */
+}
+
+/* --- Operation Buttons (Typewriter Theme) --- */
+.operation-button {
+  background-color: var(--primary);
+  color: var(--primary-text-color);
+  border-color: var(--primary-border-color);
+  /* Adjust shadow if primary color needs different rim effect */
+  box-shadow:
+    1px 1px 0px #7A9D9C, /* Lighter shade of primary for highlight */
+    2px 2px 0px var(--primary-border-color), /* Main rim shadow for primary */
+    inset 0 0 0 1px var(--background); /* Inner line, perhaps paper color for contrast */
+}
+
+.operation-button:hover {
+  background-color: var(--primary-hover-bg);
+}
+
+.operation-button:active {
+  background-color: var(--primary-active-bg);
+  /* Sinking animation is applied through .btn-active:active below */
+}
+
+
+/* --- Generic Hover and Active State Styling for All Buttons --- */
+/* This applies the visual effect but uses the specific background colors defined above */
+/* Note: .btn-hover and .btn-active are classes from globals.css that enable these states */
+
+/* Sinking animation for button presses in Typewriter theme - applies to ALL buttons */
+.btn-active:active { /* This targets any button that has btn-active and is in :active state */
+  /* The actual background-color change is handled by specific button rules above for :active state */
+  /* e.g., .number-button:active uses --secondary-active-bg */
+  /* This rule just adds the transform and shadow effect for the "sink" */
+  transform: translateY(2px) scale(0.98);
+  box-shadow:
+    inset 0px 1px 3px rgba(0,0,0,0.3), /* Inner shadow to show depth */
+    0px 0px 0px transparent; /* Remove outer rim shadow effectively by making border transparent or matching active bg */
+    /* The specific button rules (.operation-button:active, .number-button:active) already set the active background color.
+       If specific active box-shadows are needed per button type, they should be in those rules.
+       This generic one aims for a universal sinking shadow.
+       The `transparent` border for shadow might need to be `var(--active-border-color)` if defined,
+       or simply rely on the inset shadow and the existing border of the button.
+       Let's use the specific active border color if available, or a default.
+       The current structure: `0px 0px 0px var(--button-border-color)` (from original file).
+       This should be `0px 0px 0px [CURRENT_BUTTON_ACTIVE_BORDER_COLOR]`
+       For simplicity, the inset shadow and transform are the main parts of the "sink".
+       The main border (1px solid var(--[type]-border-color)) will still be visible.
+       The `2px 2px 0px var(--button-border-color)` part of the original shadow is what needs to disappear.
+    */
+}
+/* Re-evaluating the box-shadow for .btn-active:active to be more robust:
+   The original shadow created a rim. When pressed, this rim should disappear or invert.
+   The current individual button rules (.number-button, .operation-button) define border-color.
+   The .btn-base defines a default box-shadow.
+   The active state needs to override this default box-shadow.
+*/
+.btn-base.btn-active:active { /* More specific to ensure it overrides the base shadow */
+  transform: translateY(2px) scale(0.98);
+  /* New shadow for active state: just an inner shadow, removing the outer rim */
+  box-shadow: inset 0px 1px 4px rgba(0,0,0,0.4);
+}
