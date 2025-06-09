@@ -8,7 +8,7 @@ interface OperationButtonProps {
   className?: string;
 }
 
-const baseClasses = "p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center";
+const baseClasses = "btn-base btn-hover btn-active p-2 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center";
 
 export default function OperationButton({ operation, icon, className }: OperationButtonProps) {
   const onOperationClick = useOperationClick();

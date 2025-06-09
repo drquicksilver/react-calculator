@@ -1,0 +1,17 @@
+:root {
+  --background: #f0f0f0; /* Light gray */
+  --foreground: #333333; /* Dark gray */
+  --primary: #ffa500; /* Orange */
+  --secondary: #6c757d; /* Medium gray */
+  --accent: #adb5bd; /* Light gray accent */
+
+  --font-body: 'Times New Roman', Times, serif; /* A more classic font */
+  --font-button: 'Arial Black', Arial, sans-serif; /* Bold button font */
+
+  --button-background-color: var(--primary);
+  --button-text-color: #ffffff; /* White text on orange button */
+  --button-border-color: var(--primary);
+  --button-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --button-hover-background-color: #cc8400; /* Darker Orange */
+  --button-active-background-color: #a36a00; /* Even Darker Orange */
+}

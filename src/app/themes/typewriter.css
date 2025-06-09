@@ -1,0 +1,128 @@
+/* src/app/themes/typewriter.css */
+:root {
+  /* --- Typewriter Colors --- */
+  --background: #EAE0D5; /* Creamy paper */
+  --foreground: #2C2C2C; /* Dark, slightly faded ink */
+
+  /* Primary color for operation buttons or important elements */
+  --primary: #5A7D7C; /* Muted teal/blue, like old ink or machine parts */
+  /* Secondary color for number/special buttons (can be different from primary) */
+  --secondary: #D8CFC6; /* Lighter beige, like a slightly different colored key */
+  /* Accent color for highlights if needed */
+  --accent: #C75D5D; /* Muted red, like a correction ribbon */
+
+  /* --- Fonts --- */
+  --font-body: 'Courier New', Courier, monospace;
+  --font-button: 'Courier New', Courier, monospace;
+
+  /* --- Button Base Styles (Typewriter Theme) --- */
+  /* These will be picked up by .btn-base from globals.css */
+  --button-text-color: var(--foreground); /* Ink color for text */
+  --button-background-color: var(--secondary); /* Lighter keys for numbers/specials by default */
+  --button-border-color: #B0A090; /* Slightly darker than button bg for rim */
+  --button-shadow:
+    1px 1px 0px #BFBFBF, /* Outer bottom-right highlight */
+    2px 2px 0px var(--button-border-color), /* Main rim shadow */
+    inset 0 0 0 1px var(--foreground); /* Inner dark line for key top */
+
+  /* --- Button Hover States (Typewriter Theme) --- */
+  --button-hover-background-color: #C8BCAE; /* Slightly darker beige on hover */
+
+  /* --- Button Active States (Typewriter Theme) --- */
+  /* This variable will be used by a more specific .btn-active in this file if needed,
+     or we can override .btn-active directly here.
+     Let's plan to override .btn-active's background directly.
+     The sinking animation will be handled by a more specific selector. */
+  --button-active-background-color: #B8ADA0; /* Darker beige for active state */
+}
+
+/* --- Typewriter Specific Button Styling --- */
+
+/* General button overrides for typewriter theme */
+/* This ensures these styles apply when typewriter.css is loaded */
+.btn-base {
+  font-family: var(--font-button);
+  color: var(--button-text-color);
+  background-color: var(--button-background-color);
+  border: 1px solid var(--button-border-color);
+  box-shadow: var(--button-shadow);
+  border-radius: 3px; /* Slightly rounded keys */
+  padding: 10px 15px; /* Adjust padding for key feel */
+  font-weight: bold;
+  transition: transform 0.05s ease-out, box-shadow 0.05s ease-out, background-color 0.1s ease;
+}
+
+.btn-hover:hover {
+  background-color: var(--button-hover-background-color);
+  /* Optional: Slightly lift the key on hover */
+  /* transform: translateY(-1px); */
+  /* box-shadow: var(--button-shadow), 0 1px 1px rgba(0,0,0,0.2); */
+}
+
+/* Sinking animation for button presses in Typewriter theme */
+.btn-active:active {
+  background-color: var(--button-active-background-color);
+  transform: translateY(2px) scale(0.98);
+  box-shadow:
+    inset 0px 1px 3px rgba(0,0,0,0.3), /* Inner shadow to show depth */
+    0px 0px 0px var(--button-border-color); /* Remove outer rim shadow to make it look pressed */
+  /* The active:scale-95 from Tailwind might conflict or be redundant.
+     Consider removing it from the component if this animation is preferred for this theme.
+     For now, this will combine with Tailwind's active:scale-95. */
+}
+
+/* --- Operation Button Specifics for Typewriter --- */
+/* We need a way to target operation buttons.
+   If OperationButton components could have a specific class like 'btn-operation',
+   we could style them here. For now, assuming they use the same .btn-base,
+   we might need to adjust the JS to add a class, or accept they share style
+   with number buttons under this theme unless we use a different set of CSS vars for them.
+
+   Let's assume for now that OperationButtons should use the --primary color.
+   We can't easily change this with just CSS unless OperationButton has a unique class.
+   The current structure uses .btn-base for all.
+
+   If we want OperationButtons to be different, we'd need:
+   1. A specific class on OperationButton.
+   2. Or, OperationButton to use different CSS variables that are then themed here.
+
+   Let's try to provide a more specific style for OperationButtons if they had a class,
+   e.g., .btn-operation (this class is NOT currently added to the component).
+   If not, they will default to var(--button-background-color) which is var(--secondary).
+*/
+
+/* Example: How to style OperationButtons if they had a class 'btn-operation' */
+/*
+.btn-operation {
+  background-color: var(--primary);
+  color: var(--background); // Text color for operation buttons, e.g. paper color
+  --button-border-color-op: #4A6D6C; // Darker border for operation buttons
+  border: 1px solid var(--button-border-color-op);
+  box-shadow:
+    1px 1px 0px #7A9D9C,
+    2px 2px 0px var(--button-border-color-op),
+    inset 0 0 0 1px var(--foreground);
+}
+
+.btn-operation.btn-hover:hover {
+  background-color: #4A6D6C;
+}
+
+.btn-operation.btn-active:active {
+  background-color: #3A5D5C;
+  transform: translateY(2px) scale(0.98);
+  box-shadow:
+    inset 0px 1px 3px rgba(0,0,0,0.3),
+    0px 0px 0px var(--button-border-color-op);
+}
+*/
+
+/* Since we cannot add a class to OperationButton in this step,
+   the OperationButtons will use the same style as NumberButtons (var(--secondary)).
+   This is a limitation of the current structure if we want them themed differently here.
+   A possible workaround is to update the --button-background-color for OperationButtons
+   directly in their component style if the theme is 'typewriter', but that's not ideal.
+
+   For now, all buttons will share the var(--secondary) look from .btn-base,
+   and the var(--primary) is available for other uses or future button differentiation.
+*/
