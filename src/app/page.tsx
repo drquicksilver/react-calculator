@@ -3,13 +3,11 @@
 import { useState } from 'react';
 import NumberButton from './components/NumberButton';
 import { NumberButtonProvider } from './components/NumberButtonProvider';
-
-enum Operation {
-  Add = '+',
-  Subtract = '-',
-  Multiply = 'x',
-  Divide = '➗',
-}
+import OperationButton from './components/OperationButton';
+import { OperationButtonProvider } from './components/OperationButtonProvider';
+import SpecialButton from './components/SpecialButton';
+import { SpecialButtonProvider } from './components/SpecialButtonProvider';
+import { Operation } from './types';
 
 // SVG Icon Components
 const PlusIcon = () => <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"></path></svg>;
@@ -28,6 +26,28 @@ export default function Home() {
   const [previousValue, setPreviousValue] = useState<number | null>(null);
   const [operator, setOperator] = useState<Operation | null>(null);
   const [waitingForOperand, setWaitingForOperand] = useState<boolean>(false);
+
+  const handleSpecialClick = (value: string) => {
+    switch (value) {
+      case 'AC':
+        handleClearClick();
+        break;
+      case '+/-':
+        handleSignToggleClick();
+        break;
+      case '%':
+        handlePercentageClick();
+        break;
+      case '.':
+        handleDecimalClick();
+        break;
+      case '=':
+        handleEqualClick();
+        break;
+      default:
+        console.warn('Unhandled special button value:', value);
+    }
+  };
 
   const calculate = (val1: number, op: Operation, val2: number): number => {
     switch (op) {
@@ -145,34 +165,38 @@ export default function Home() {
         <div className="display bg-gray-200 text-right p-2 rounded mb-4 text-3xl h-20 flex items-center justify-end">
           {displayValue}
         </div>
-        <NumberButtonProvider onNumberClick={handleNumberClick}>
-        <div className="buttons-grid grid grid-cols-4 gap-2">
-          {/* Row 1 */}
-          <button onClick={handleClearClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">AC</button>
-          <button onClick={handleSignToggleClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">+/-</button>
-          <button onClick={handlePercentageClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">%</button>
-          <button onClick={() => handleOperatorClick(Operation.Divide)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><DivideIcon /></button>
+        <SpecialButtonProvider onSpecialClick={handleSpecialClick}>
+          <OperationButtonProvider onOperationClick={handleOperatorClick}>
+            <NumberButtonProvider onNumberClick={handleNumberClick}>
+              <div className="buttons-grid grid grid-cols-4 gap-2">
+                {/* Row 1 */}
+                <SpecialButton value="AC" />
+                <SpecialButton value="+/-" />
+                <SpecialButton value="%" />
+                <OperationButton operation={Operation.Divide} icon={<DivideIcon />} />
           {/* Row 2 */}
           <NumberButton value="7" />
           <NumberButton value="8" />
           <NumberButton value="9" />
-          <button onClick={() => handleOperatorClick(Operation.Multiply)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><MultiplyIcon /></button>
+                <OperationButton operation={Operation.Multiply} icon={<MultiplyIcon />} />
           {/* Row 3 */}
           <NumberButton value="4" />
           <NumberButton value="5" />
           <NumberButton value="6" />
-          <button onClick={() => handleOperatorClick(Operation.Subtract)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><MinusIcon /></button>
+                <OperationButton operation={Operation.Subtract} icon={<MinusIcon />} />
           {/* Row 4 */}
           <NumberButton value="1" />
           <NumberButton value="2" />
           <NumberButton value="3" />
-          <button onClick={() => handleOperatorClick(Operation.Add)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><PlusIcon /></button>
+                <OperationButton operation={Operation.Add} icon={<PlusIcon />} />
           {/* Row 5 */}
           <NumberButton value="0" className="col-span-2" />
-          <button onClick={handleDecimalClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">.</button>
-          <button onClick={handleEqualClick} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center">=</button>
-        </div>
-        </NumberButtonProvider>
+                <SpecialButton value="." />
+                <SpecialButton value="=" className="bg-orange-400 hover:bg-orange-500 active:bg-orange-600 text-white" />
+              </div>
+            </NumberButtonProvider>
+          </OperationButtonProvider>
+        </SpecialButtonProvider>
       </div>
     </div>
   );
