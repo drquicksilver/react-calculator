@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import NumberButton from './components/NumberButton';
+import { NumberButtonProvider } from './components/NumberButtonProvider';
 
 enum Operation {
   Add = '+',
@@ -143,6 +145,7 @@ export default function Home() {
         <div className="display bg-gray-200 text-right p-2 rounded mb-4 text-3xl h-20 flex items-center justify-end">
           {displayValue}
         </div>
+        <NumberButtonProvider onNumberClick={handleNumberClick}>
         <div className="buttons-grid grid grid-cols-4 gap-2">
           {/* Row 1 */}
           <button onClick={handleClearClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">AC</button>
@@ -150,25 +153,26 @@ export default function Home() {
           <button onClick={handlePercentageClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">%</button>
           <button onClick={() => handleOperatorClick(Operation.Divide)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><DivideIcon /></button>
           {/* Row 2 */}
-          <button onClick={() => handleNumberClick('7')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">7</button>
-          <button onClick={() => handleNumberClick('8')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">8</button>
-          <button onClick={() => handleNumberClick('9')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">9</button>
+          <NumberButton value="7" />
+          <NumberButton value="8" />
+          <NumberButton value="9" />
           <button onClick={() => handleOperatorClick(Operation.Multiply)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><MultiplyIcon /></button>
           {/* Row 3 */}
-          <button onClick={() => handleNumberClick('4')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">4</button>
-          <button onClick={() => handleNumberClick('5')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">5</button>
-          <button onClick={() => handleNumberClick('6')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">6</button>
+          <NumberButton value="4" />
+          <NumberButton value="5" />
+          <NumberButton value="6" />
           <button onClick={() => handleOperatorClick(Operation.Subtract)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><MinusIcon /></button>
           {/* Row 4 */}
-          <button onClick={() => handleNumberClick('1')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">1</button>
-          <button onClick={() => handleNumberClick('2')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">2</button>
-          <button onClick={() => handleNumberClick('3')} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">3</button>
+          <NumberButton value="1" />
+          <NumberButton value="2" />
+          <NumberButton value="3" />
           <button onClick={() => handleOperatorClick(Operation.Add)} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center"><PlusIcon /></button>
           {/* Row 5 */}
-          <button onClick={() => handleNumberClick('0')} className="col-span-2 p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">0</button>
+          <NumberButton value="0" className="col-span-2" />
           <button onClick={handleDecimalClick} className="p-2 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 active:scale-95 transition-transform duration-75 ease-out rounded text-xl flex items-center justify-center">.</button>
           <button onClick={handleEqualClick} className="p-2 bg-orange-400 hover:bg-orange-500 active:bg-orange-600 active:scale-95 transition-transform duration-75 ease-out text-white rounded text-xl flex items-center justify-center">=</button>
         </div>
+        </NumberButtonProvider>
       </div>
     </div>
   );
