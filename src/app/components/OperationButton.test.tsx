@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import OperationButton from './OperationButton';
 import { OperationButtonProvider } from './OperationButtonProvider';
-import { Operation } from '../page'; // Adjust path as necessary
+import { Operation } from '../types';
 
 // Mock Icon
 const MockIcon = () => <svg data-testid="mock-icon"></svg>;

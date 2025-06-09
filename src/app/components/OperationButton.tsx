@@ -1,6 +1,6 @@
 import React from 'react';
 import { useOperationClick } from './OperationButtonProvider';
-import { Operation } from '../page'; // Assuming Operation enum is in page.tsx
+import { Operation } from '../types';
 
 interface OperationButtonProps {
   operation: Operation;
