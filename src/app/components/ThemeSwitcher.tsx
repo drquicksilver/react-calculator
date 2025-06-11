@@ -7,7 +7,19 @@ const ThemeSwitcher: React.FC = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div style={{ position: 'fixed', top: '10px', right: '10px', padding: '10px', background: 'rgba(255,255,255,0.8)', border: '1px solid #ccc', zIndex: 1000 }}>
+    <div
+      style={{
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        padding: '10px',
+        background: 'rgba(255,255,255,0.8)',
+        border: '1px solid #ccc',
+        zIndex: 1000,
+        fontFamily: 'Arial, Helvetica, sans-serif',
+        fontSize: '14px',
+      }}
+    >
       <p style={{ marginBottom: '8px' }}>Current Theme: <strong>{theme}</strong></p>
       <div style={{ display: 'flex', gap: '8px' }}>
         <button onClick={() => setTheme('default')} disabled={theme === 'default'} style={buttonStyle(theme === 'default')}>
@@ -33,6 +45,8 @@ const buttonStyle = (isActive: boolean) => ({
   cursor: 'pointer',
   borderRadius: '4px',
   opacity: isActive ? 0.7 : 1,
+  fontFamily: 'Arial, Helvetica, sans-serif',
+  fontSize: '14px',
 });
 
 export default ThemeSwitcher;
