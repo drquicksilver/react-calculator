@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Make sure useEffect is imported
 import { useTheme } from './contexts/ThemeContext';
 import ThemeSwitcher from './components/ThemeSwitcher'; // Import ThemeSwitcher
 import NumberButton from './components/NumberButton';
@@ -10,6 +10,21 @@ import { OperationButtonProvider } from './components/OperationButtonProvider';
 import SpecialButton from './components/SpecialButton';
 import { SpecialButtonProvider } from './components/SpecialButtonProvider';
 import { Operation } from './types';
+
+// Define CalculatorState interface and initial state
+interface CalculatorState {
+  displayValue: string;
+  previousValue: number | null;
+  operator: Operation | null;
+  waitingForOperand: boolean;
+}
+
+const initialCalculatorState: CalculatorState = {
+  displayValue: "0",
+  previousValue: null,
+  operator: null,
+  waitingForOperand: false,
+};
 
 // SVG Icon Components
 const PlusIcon = () => <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"></path></svg>;
@@ -24,11 +39,55 @@ const DivideIcon = () => (
 );
 
 export default function Home() {
-  const [displayValue, setDisplayValue] = useState<string>("0");
-  const [previousValue, setPreviousValue] = useState<number | null>(null);
-  const [operator, setOperator] = useState<Operation | null>(null);
-  const [waitingForOperand, setWaitingForOperand] = useState<boolean>(false);
+  const [displayValue, setDisplayValue] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const savedState = localStorage.getItem('calculatorState');
+      if (savedState) {
+        return JSON.parse(savedState).displayValue;
+      }
+    }
+    return initialCalculatorState.displayValue;
+  });
+  const [previousValue, setPreviousValue] = useState<number | null>(() => {
+    if (typeof window !== 'undefined') {
+      const savedState = localStorage.getItem('calculatorState');
+      if (savedState) {
+        return JSON.parse(savedState).previousValue;
+      }
+    }
+    return initialCalculatorState.previousValue;
+  });
+  const [operator, setOperator] = useState<Operation | null>(() => {
+    if (typeof window !== 'undefined') {
+      const savedState = localStorage.getItem('calculatorState');
+      if (savedState) {
+        return JSON.parse(savedState).operator;
+      }
+    }
+    return initialCalculatorState.operator;
+  });
+  const [waitingForOperand, setWaitingForOperand] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const savedState = localStorage.getItem('calculatorState');
+      if (savedState) {
+        return JSON.parse(savedState).waitingForOperand;
+      }
+    }
+    return initialCalculatorState.waitingForOperand;
+  });
   const { theme } = useTheme();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const calculatorState: CalculatorState = {
+        displayValue,
+        previousValue,
+        operator,
+        waitingForOperand,
+      };
+      localStorage.setItem('calculatorState', JSON.stringify(calculatorState));
+    }
+  }, [displayValue, previousValue, operator, waitingForOperand]);
 
   const handleSpecialClick = (value: string) => {
     switch (value) {

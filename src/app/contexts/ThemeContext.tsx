@@ -17,7 +17,13 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>('default'); // Default theme
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      const storedTheme = localStorage.getItem('theme') as Theme | null;
+      return storedTheme || 'default';
+    }
+    return 'default'; // Default theme for server-side rendering
+  });
 
   useEffect(() => {
     const themeFile = THEME_FILES[theme];
@@ -36,6 +42,9 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       if (linkElement) {
         linkElement.remove();
       }
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme); // Save theme to local storage
     }
   }, [theme]);
 
