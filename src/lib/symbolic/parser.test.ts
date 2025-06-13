@@ -1,0 +1,57 @@
+import { describe, it, expect } from 'vitest';
+import { parse, Expression } from './parser';
+
+function number(value: number): Expression {
+  return { type: 'number', value };
+}
+
+function binary(op: '+' | '-' | '×' | '÷', left: Expression, right: Expression): Expression {
+  return { type: 'binary', operator: op, left, right };
+}
+
+describe('parse', () => {
+  it('parses simple addition', () => {
+    expect(parse('1+2')).toEqual(binary('+', number(1), number(2)));
+  });
+
+  it('respects operator precedence', () => {
+    // 2 + 3 × 4 -> 2 + (3 × 4)
+    expect(parse('2+3×4')).toEqual(
+      binary('+', number(2), binary('×', number(3), number(4)))
+    );
+  });
+
+  it('handles parentheses', () => {
+    // (2 + 3) × 4
+    expect(parse('(2+3)×4')).toEqual(
+      binary('×', binary('+', number(2), number(3)), number(4))
+    );
+  });
+
+  it('parses decimal numbers', () => {
+    expect(parse('1.5+2.25')).toEqual(binary('+', number(1.5), number(2.25)));
+  });
+
+  it('parses long addition chain', () => {
+    expect(parse('1+2+3+4+5')).toEqual(
+      binary(
+        '+',
+        binary(
+          '+',
+          binary('+', binary('+', number(1), number(2)), number(3)),
+          number(4)
+        ),
+        number(5)
+      )
+    );
+  });
+
+  it('parses mixed long expression', () => {
+    // 1 + (2 × 3) - (4 ÷ 5) + 6
+    const mult = binary('×', number(2), number(3));
+    const div = binary('÷', number(4), number(5));
+    expect(parse('1+2×3-4÷5+6')).toEqual(
+      binary('+', binary('-', binary('+', number(1), mult), div), number(6))
+    );
+  });
+});

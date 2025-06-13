@@ -27,10 +27,6 @@ Keeping the symbolic logic in `src/lib/symbolic` keeps the React UI focused only
    - Text field above the keypad for typing complete expressions.
    - When `=` or `Enter` is pressed in algebraic mode, evaluate the expression.
    - User-visible change: typed expressions like `2*(3+4)` are handled.
-3. **Build the parser** (`parser.ts`)
-   - Tokenise basic operators (+, -, ×, ÷) and parentheses.
-   - Produce an AST structure used throughout the symbolic engine.
-   - Include unit tests to validate parsing.
 4. **Numeric evaluation using the AST** (`evaluate.ts`)
    - Replace the string-based calculation with evaluation of the AST.
    - User-visible change: expression input is interpreted with operator precedence.
@@ -56,3 +52,4 @@ Each stage introduces new functionality visible to the user while keeping the im
 ## Recently completed work
 
 - Added algebraic/classic mode toggle with parentheses keys
+- Implemented custom arithmetic parser with unit tests
