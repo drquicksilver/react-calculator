@@ -9,9 +9,6 @@ const ThemeSwitcher: React.FC = () => {
   return (
     <div
       style={{
-        position: 'fixed',
-        top: '10px',
-        right: '10px',
         padding: '10px',
         background: 'rgba(255,255,255,0.8)',
         border: '1px solid #ccc',
