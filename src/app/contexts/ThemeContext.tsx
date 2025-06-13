@@ -2,12 +2,13 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type Theme = 'default' | 'classic' | 'typewriter' | 'metal'; // Add more themes as needed
+type Theme = 'default' | 'classic' | 'typewriter' | 'metal' | 'neon'; // Add more themes as needed
 const THEME_FILES: Record<Theme, string | null> = {
   default: null, // No specific file for default, uses globals.css base
   classic: '/themes/classic.css',
   typewriter: '/themes/typewriter.css',
   metal: '/themes/metal.css',
+  neon: '/themes/neon.css',
 };
 
 interface ThemeContextType {
