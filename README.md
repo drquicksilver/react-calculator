@@ -18,3 +18,10 @@ top right of the app to try them. Available themes are:
 
 Use the mode toggle at the top right to switch between **classic** and **algebraic** modes. Algebraic mode shows extra parentheses buttons and lets you type expressions like `1-(2×3)` directly in the display. Evaluation of these algebraic expressions isn't implemented yet, so `=` currently does nothing in this mode.
 
+### Symbolic engine
+
+The groundwork for symbolic calculations has begun. `src/lib/symbolic/parser.ts`
+parses expressions containing `+`, `-`, `×` and `÷` (including decimal numbers)
+into a small AST using a lightweight parser-combinator library. This custom
+grammar will make it easy to add variables and other features in the future.
+
