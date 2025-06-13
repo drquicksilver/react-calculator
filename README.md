@@ -13,3 +13,4 @@ top right of the app to try them. Available themes are:
 - **Typewriter** – round keys with typewriter vibes.
 - **Metal** – shiny metallic gradients.
 - **Neon** – a fun, animated palette of bright neon colors.
+
