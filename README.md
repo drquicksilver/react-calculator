@@ -14,3 +14,7 @@ top right of the app to try them. Available themes are:
 - **Metal** – shiny metallic gradients.
 - **Neon** – a fun, animated palette of bright neon colors.
 
+### Modes
+
+Use the mode toggle at the top right to switch between **classic** and **algebraic** modes. Algebraic mode shows extra parentheses buttons and lets you type expressions like `1-(2×3)` directly in the display. Evaluation of these algebraic expressions isn't implemented yet, so `=` currently does nothing in this mode.
+
