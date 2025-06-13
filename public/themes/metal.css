@@ -1,0 +1,106 @@
+:root {
+  --background: #454545; /* Dark gray background */
+  --foreground: #E0E0E0; /* Light gray text */
+
+  /* Metallic theme colors */
+  --metal-primary: #708090; /* Slate gray */
+  --metal-secondary: #B0C4DE; /* Light steel blue */
+  --metal-accent: #6A7B8D; /* Darker slate gray */
+  --metal-highlight: #FFFFFF; /* White for highlights */
+  --metal-shadow: #2F4F4F; /* Dark slate gray for shadows */
+
+  /* Fonts (can be same as classic or new) */
+  --font-body: 'Arial', sans-serif;
+  --font-button: 'Verdana', sans-serif;
+
+  /* Button specific variables */
+  --button-text-color: #FFFFFF;
+  --button-border-width: 1px;
+  --button-border-radius: 6px; /* Slightly more rounded for a modern feel */
+
+  /* Operation Buttons: Steel Blue Gradient */
+  --op-button-bg-start: #77A1D3; /* Light Steel Blue */
+  --op-button-bg-end: #4A708B;   /* Darker Steel Blue */
+  --op-button-text-color: var(--button-text-color);
+  --op-button-border-color: #3A5A70; /* Darkest Steel Blue */
+  --op-button-hover-bg-start: #8FB8E4;
+  --op-button-hover-bg-end: #5A809C;
+  --op-button-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+
+  /* Number Buttons: Metallic Silver/Gray Gradient */
+  --num-button-bg-start: #BCC6CC; /* Silver */
+  --num-button-bg-end: #98A1A6;   /* Gray */
+  --num-button-text-color: #1C1C1C; /* Dark text for contrast */
+  --num-button-border-color: #7E8A91; /* Darker Gray */
+  --num-button-hover-bg-start: #CCD1D9;
+  --num-button-hover-bg-end: #A8B1B6;
+  --num-button-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+  /* Special Buttons: Dark Metallic Gradient */
+  --spec-button-bg-start: #6C7A89; /* Dark Slate Gray */
+  --spec-button-bg-end: #4A545E;   /* Darker Slate Gray */
+  --spec-button-text-color: var(--button-text-color);
+  --spec-button-border-color: #3A424A; /* Very Dark Slate Gray */
+  --spec-button-hover-bg-start: #7C8A99;
+  --spec-button-hover-bg-end: #5A646E;
+  --spec-button-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Specific Button Styling for Metal Theme --- */
+
+/* Operation Buttons */
+.operation-button {
+  background: linear-gradient(to bottom, var(--op-button-bg-start), var(--op-button-bg-end));
+  color: var(--op-button-text-color);
+  border: var(--button-border-width) solid var(--op-button-border-color);
+  border-radius: var(--button-border-radius);
+  box-shadow: var(--op-button-shadow);
+  font-family: var(--font-button);
+}
+
+.operation-button:hover {
+  background: linear-gradient(to bottom, var(--op-button-hover-bg-start), var(--op-button-hover-bg-end));
+}
+
+/* Number Buttons */
+.number-button {
+  background: linear-gradient(to bottom, var(--num-button-bg-start), var(--num-button-bg-end));
+  color: var(--num-button-text-color);
+  border: var(--button-border-width) solid var(--num-button-border-color);
+  border-radius: var(--button-border-radius);
+  box-shadow: var(--num-button-shadow);
+  font-family: var(--font-button);
+}
+
+.number-button:hover {
+  background: linear-gradient(to bottom, var(--num-button-hover-bg-start), var(--num-button-hover-bg-end));
+}
+
+/* Special Buttons */
+.special-button {
+  background: linear-gradient(to bottom, var(--spec-button-bg-start), var(--spec-button-bg-end));
+  color: var(--spec-button-text-color);
+  border: var(--button-border-width) solid var(--spec-button-border-color);
+  border-radius: var(--button-border-radius);
+  box-shadow: var(--spec-button-shadow);
+  font-family: var(--font-button);
+}
+
+.special-button:hover {
+  background: linear-gradient(to bottom, var(--spec-button-hover-bg-start), var(--spec-button-hover-bg-end));
+}
+
+/* Active state for all buttons - uses transform from base but can add more if needed */
+/* The base classes already include: active:scale-95 transition-transform duration-75 ease-out */
+/* We can enhance the "pushed" feeling by slightly changing the shadow or brightness if desired */
+.operation-button:active,
+.number-button:active,
+.special-button:active {
+  /* Example: slightly inset shadow for a more pushed look */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), var(--op-button-shadow); /* Keep original shadow too or blend */
+  transform: scale(0.95) translateY(1px); /* Existing scale + slight downward move */
+}
+
+/* Ensure body/app background and text colors are set if this theme is active */
+/* This might be handled by a global CSS that reads these variables, or needs specific selector */
+/* For now, assuming a global mechanism picks up --background and --foreground */
