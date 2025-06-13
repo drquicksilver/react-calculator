@@ -1,0 +1,62 @@
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --font-body: 'Comic Sans MS', cursive, sans-serif;
+  --font-button: 'Comic Sans MS', cursive, sans-serif;
+
+  --neon-color-1: #ff00ff;
+  --neon-color-2: #00ffff;
+  --neon-color-3: #39ff14;
+  --neon-color-4: #ffea00;
+  --neon-color-5: #ff6600;
+}
+
+@keyframes neon-cycle-1 {
+  0% { background-color: var(--neon-color-1); }
+  20% { background-color: var(--neon-color-2); }
+  40% { background-color: var(--neon-color-3); }
+  60% { background-color: var(--neon-color-4); }
+  80% { background-color: var(--neon-color-5); }
+  100% { background-color: var(--neon-color-1); }
+}
+
+@keyframes neon-cycle-2 {
+  0% { background-color: var(--neon-color-3); }
+  20% { background-color: var(--neon-color-4); }
+  40% { background-color: var(--neon-color-5); }
+  60% { background-color: var(--neon-color-1); }
+  80% { background-color: var(--neon-color-2); }
+  100% { background-color: var(--neon-color-3); }
+}
+
+.btn-base {
+  border: none;
+  color: var(--foreground);
+  box-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
+  animation-duration: 6s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.number-button {
+  animation-name: neon-cycle-1;
+}
+
+.operation-button {
+  animation-name: neon-cycle-2;
+}
+
+.special-button {
+  animation-name: neon-cycle-1;
+  animation-duration: 4s;
+  filter: brightness(1.3);
+}
+
+.btn-hover:hover {
+  filter: brightness(1.6) drop-shadow(0 0 10px currentColor);
+}
+
+.buttons-grid:has(.btn-base:hover) .btn-base:not(:hover) {
+  filter: brightness(0.8);
+  animation-direction: reverse;
+}

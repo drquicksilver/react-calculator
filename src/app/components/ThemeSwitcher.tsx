@@ -34,6 +34,9 @@ const ThemeSwitcher: React.FC = () => {
         <button onClick={() => setTheme('metal')} disabled={theme === 'metal'} style={buttonStyle(theme === 'metal')}>
           Metal
         </button>
+        <button onClick={() => setTheme('neon')} disabled={theme === 'neon'} style={buttonStyle(theme === 'neon')}>
+          Neon
+        </button>
       </div>
     </div>
   );
