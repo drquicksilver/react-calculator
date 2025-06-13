@@ -23,10 +23,6 @@ Keeping the symbolic logic in `src/lib/symbolic` keeps the React UI focused only
 
 ## Step-by-step Path
 
-1. **Add algebraic/classic mode toggle**
-   - Place a toggle next to the existing theme switcher.
-   - When set to **Algebraic** the keypad should include `(` and `)` keys.
-   - **Classic** remains the current four‑function behaviour.
 2. **Add `ExpressionInput` component**
    - Text field above the keypad for typing complete expressions.
    - When `=` or `Enter` is pressed in algebraic mode, evaluate the expression.
@@ -59,4 +55,4 @@ Each stage introduces new functionality visible to the user while keeping the im
 
 ## Recently completed work
 
-(none yet)
+- Added algebraic/classic mode toggle with parentheses keys

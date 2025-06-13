@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useTheme } from './contexts/ThemeContext';
 import ThemeSwitcher from './components/ThemeSwitcher'; // Import ThemeSwitcher
+import { useMode } from './contexts/ModeContext';
+import ModeToggle from './components/ModeToggle';
 import NumberButton from './components/NumberButton';
 import { NumberButtonProvider } from './components/NumberButtonProvider';
 import OperationButton from './components/OperationButton';
@@ -29,8 +31,30 @@ export default function Home() {
   const [operator, setOperator] = useState<Operation | null>(null);
   const [waitingForOperand, setWaitingForOperand] = useState<boolean>(false);
   const { theme } = useTheme();
+  const { mode } = useMode();
 
   const handleSpecialClick = (value: string) => {
+    if (mode === 'algebraic') {
+      switch (value) {
+        case 'AC':
+          handleClearClick();
+          break;
+        case '.':
+          setDisplayValue((prev) => (prev === '0' ? '0.' : prev + '.'));
+          break;
+        case '(':
+        case ')':
+          setDisplayValue((prev) => (prev === '0' ? value : prev + value));
+          break;
+        case '=':
+          // evaluation not implemented yet
+          break;
+        default:
+          // ignore other specials in algebraic mode for now
+          break;
+      }
+      return;
+    }
     switch (value) {
       case 'AC':
         handleClearClick();
@@ -52,7 +76,7 @@ export default function Home() {
     }
   };
 
-  const calculate = (val1: number, op: Operation, val2: number): number => {
+const calculate = (val1: number, op: Operation, val2: number): number => {
     switch (op) {
       case Operation.Add:
         return val1 + val2;
@@ -68,9 +92,20 @@ export default function Home() {
       default:
         return val2; // Should not happen
     }
-  };
+};
+
+const operatorSymbols: Record<Operation, string> = {
+  [Operation.Add]: '+',
+  [Operation.Subtract]: '-',
+  [Operation.Multiply]: '*',
+  [Operation.Divide]: '/',
+};
 
   const handleNumberClick = (num: string) => {
+    if (mode === 'algebraic') {
+      setDisplayValue(displayValue === '0' ? num : displayValue + num);
+      return;
+    }
     if (waitingForOperand) {
       setDisplayValue(num);
       setWaitingForOperand(false);
@@ -80,6 +115,11 @@ export default function Home() {
   };
 
   const handleOperatorClick = (op: Operation) => {
+    if (mode === 'algebraic') {
+      const symbol = operatorSymbols[op];
+      setDisplayValue(displayValue === '0' ? symbol : displayValue + symbol);
+      return;
+    }
     const currentValue = parseFloat(displayValue);
 
     if (isNaN(currentValue) && displayValue !== "Error") return; // Ignore if current display is not a number unless it's already an error
@@ -110,6 +150,10 @@ export default function Home() {
   };
 
   const handleEqualClick = () => {
+    if (mode === 'algebraic') {
+      // evaluation will be implemented later
+      return;
+    }
     const currentValue = parseFloat(displayValue);
 
     if (isNaN(currentValue) && displayValue !== "Error") return;
@@ -164,8 +208,9 @@ export default function Home() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      {/* ThemeSwitcher can be placed here, or inside the calculator-container for better positioning relative to it */}
+      {/* Theme and mode toggles */}
       <ThemeSwitcher />
+      <ModeToggle />
       <div className="calculator-container bg-white p-4 rounded shadow-lg w-80">
         <div className="display bg-gray-200 text-right p-2 rounded mb-4 text-3xl h-20 flex items-center justify-end">
           {displayValue}
@@ -201,6 +246,15 @@ export default function Home() {
           />
                 <SpecialButton value="." />
                 <SpecialButton value="=" className="bg-orange-400 hover:bg-orange-500 active:bg-orange-600 text-white" />
+                {mode === 'algebraic' && (
+                  <>
+                    {/* Row 6 */}
+                    <SpecialButton value="(" />
+                    <SpecialButton value=")" />
+                    <div className="invisible" />
+                    <div className="invisible" />
+                  </>
+                )}
               </div>
             </NumberButtonProvider>
           </OperationButtonProvider>
