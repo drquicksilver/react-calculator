@@ -25,4 +25,6 @@ parses expressions containing `+`, `-`, `×` and `÷` (including decimal numbers
 into a small AST using a lightweight parser-combinator library. This custom
 grammar will make it easy to add variables and other features in the future.
 `src/lib/symbolic/evaluate.ts` walks that AST to compute a numeric result.
+Invalid input now raises a `ParseError` that reports the index and expected token,
+making issues easier to diagnose.
 

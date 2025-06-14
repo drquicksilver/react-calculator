@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parse, Expression } from './parser';
+import { parse, Expression, ParseError } from './parser';
 
 function number(value: number): Expression {
   return { type: 'number', value };
@@ -53,5 +53,23 @@ describe('parse', () => {
     expect(parse('1+2×3-4÷5+6')).toEqual(
       binary('+', binary('-', binary('+', number(1), mult), div), number(6))
     );
+  });
+
+  describe('errors', () => {
+    it('fails on unexpected operator', () => {
+      expect(() => parse('1++2')).toThrowError(new ParseError(1, 'end of input'));
+    });
+
+    it('fails on unclosed parenthesis', () => {
+      expect(() => parse('(1+2')).toThrowError(new ParseError(4, ')'));
+    });
+
+    it('fails on trailing characters', () => {
+      expect(() => parse('1+2a')).toThrowError(new ParseError(3, 'end of input'));
+    });
+
+    it('fails on empty input', () => {
+      expect(() => parse('')).toThrowError(new ParseError(0, '('));
+    });
   });
 });
