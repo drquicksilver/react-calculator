@@ -1,5 +1,7 @@
+/// <reference types="vitest" />
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import OperationButton from './OperationButton';
 import { OperationButtonProvider } from './OperationButtonProvider';
@@ -10,7 +12,7 @@ const MockIcon = () => <svg data-testid="mock-icon"></svg>;
 
 describe('OperationButton', () => {
   it('renders the button with the icon', () => {
-    const mockHandleOperationClick = jest.fn();
+    const mockHandleOperationClick = vi.fn();
     render(
       <OperationButtonProvider onOperationClick={mockHandleOperationClick}>
         <OperationButton operation={Operation.Add} icon={<MockIcon />} />
@@ -21,7 +23,7 @@ describe('OperationButton', () => {
   });
 
   it('calls onOperationClick with the correct operation when clicked', () => {
-    const mockHandleOperationClick = jest.fn();
+    const mockHandleOperationClick = vi.fn();
     render(
       <OperationButtonProvider onOperationClick={mockHandleOperationClick}>
         <OperationButton operation={Operation.Add} icon={<MockIcon />} />
@@ -33,7 +35,7 @@ describe('OperationButton', () => {
   });
 
   it('applies custom className', () => {
-    const mockHandleOperationClick = jest.fn();
+    const mockHandleOperationClick = vi.fn();
     render(
       <OperationButtonProvider onOperationClick={mockHandleOperationClick}>
         <OperationButton operation={Operation.Add} icon={<MockIcon />} className="custom-class" />
