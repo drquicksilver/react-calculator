@@ -1,6 +1,15 @@
 import { Parser, regex, seq, str, token, lazy, many } from './parserlib';
 
 /**
+ * Error thrown when parsing fails.
+ */
+export class ParseError extends SyntaxError {
+  constructor(public index: number, public expected: string) {
+    super(`Expected ${expected} at index ${index}`);
+  }
+}
+
+/**
  * AST node for a numeric literal.
  */
 export interface NumberLiteral {
@@ -67,9 +76,11 @@ const Sum: Parser<Expression> = seq(Term, many(seq(plus.or(minus), Term)))
  */
 export function parse(input: string): Expression {
   const result = ExpressionP.run(input);
-  if (!result.ok || result.index !== input.length) {
-    const idx = result.ok ? result.index : result.index;
-    throw new SyntaxError(`Parse error at index ${idx}`);
+  if (result.ok && result.index === input.length) {
+    return result.value;
   }
-  return result.value;
+
+  const index = result.index;
+  const expected = result.ok ? 'end of input' : result.expected;
+  throw new ParseError(index, expected);
 }
