@@ -55,9 +55,9 @@ export function regex(r: RegExp): Parser<string> {
 
 export function seq<A, B>(a: Parser<A>, b: Parser<B>): Parser<[A, B]>;
 export function seq<A, B, C>(a: Parser<A>, b: Parser<B>, c: Parser<C>): Parser<[A, B, C]>;
-export function seq(...parsers: Parser<any>[]): Parser<any[]> {
+export function seq(...parsers: Parser<unknown>[]): Parser<unknown[]> {
   return new Parser((input, index) => {
-    const values: any[] = [];
+    const values: unknown[] = [];
     let i = index;
     for (const p of parsers) {
       const res = p.run(input, i);

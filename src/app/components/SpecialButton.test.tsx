@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import SpecialButton from './SpecialButton';
 import { SpecialButtonProvider } from './SpecialButtonProvider';
 
 describe('SpecialButton', () => {
   it('renders the button with its value as text by default', () => {
-    const mockHandleSpecialClick = jest.fn();
+    const mockHandleSpecialClick = vi.fn();
     render(
       <SpecialButtonProvider onSpecialClick={mockHandleSpecialClick}>
         <SpecialButton value="AC" />
@@ -16,7 +17,7 @@ describe('SpecialButton', () => {
   });
 
   it('renders children if provided', () => {
-    const mockHandleSpecialClick = jest.fn();
+    const mockHandleSpecialClick = vi.fn();
     render(
       <SpecialButtonProvider onSpecialClick={mockHandleSpecialClick}>
         <SpecialButton value="PLUSMINUS"><span>+/-</span></SpecialButton>
@@ -27,7 +28,7 @@ describe('SpecialButton', () => {
   });
 
   it('calls onSpecialClick with the correct value when clicked', () => {
-    const mockHandleSpecialClick = jest.fn();
+    const mockHandleSpecialClick = vi.fn();
     const testValue = "AC";
     render(
       <SpecialButtonProvider onSpecialClick={mockHandleSpecialClick}>
@@ -40,7 +41,7 @@ describe('SpecialButton', () => {
   });
 
   it('applies custom className', () => {
-    const mockHandleSpecialClick = jest.fn();
+    const mockHandleSpecialClick = vi.fn();
     render(
       <SpecialButtonProvider onSpecialClick={mockHandleSpecialClick}>
         <SpecialButton value="AC" className="custom-class" />
