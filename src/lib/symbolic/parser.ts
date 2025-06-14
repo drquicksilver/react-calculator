@@ -36,9 +36,9 @@ const rparen = token(str(')'));
 const ExpressionP: Parser<Expression> = lazy(() => Sum);
 
 // factor: number | '(' Expression ')'
-const Factor: Parser<Expression> = numberTok.or(
-  seq(lparen, ExpressionP, rparen).map(([, expr]) => expr)
-);
+const Factor: Parser<Expression> = numberTok
+  .map(expr => expr as Expression)
+  .or(seq(lparen, ExpressionP, rparen).map(([, expr]) => expr));
 
 // term: Factor ( (× | ÷) Factor )*
 const Term: Parser<Expression> = seq(Factor, many(seq(times.or(divide), Factor)))
