@@ -32,6 +32,7 @@ export default function Home() {
   const [previousValue, setPreviousValue] = useState<number | null>(null);
   const [operator, setOperator] = useState<Operation | null>(null);
   const [waitingForOperand, setWaitingForOperand] = useState<boolean>(false);
+  const [variables, setVariables] = useState<Record<string, number>>({});
   const { theme } = useTheme();
   const { mode } = useMode();
 
@@ -159,7 +160,9 @@ const operatorSymbols: Record<Operation, string> = {
   const handleEqualClick = useCallback(() => {
     if (mode === 'algebraic') {
       try {
-        const result = evaluateExpression(displayValue);
+        const vars = { ...variables };
+        const result = evaluateExpression(displayValue, vars);
+        setVariables(vars);
         setDisplayValue(result.toString());
       } catch (err) {
         if (err instanceof ParseError) {
@@ -190,7 +193,7 @@ const operatorSymbols: Record<Operation, string> = {
       // setWaitingForOperand(true); // Common behavior, can be false if we want to start a new calculation immediately
       setWaitingForOperand(true);
     }
-  }, [mode, displayValue, operator, previousValue]);
+  }, [mode, displayValue, operator, previousValue, variables]);
 
   const handleClearClick = () => {
     setDisplayValue("0");
@@ -243,6 +246,13 @@ const operatorSymbols: Record<Operation, string> = {
         <div className="display bg-gray-200 text-right p-2 rounded mb-4 text-3xl h-20 flex items-center justify-end">
           {displayValue}
         </div>
+        {mode === 'algebraic' && Object.keys(variables).length > 0 && (
+          <div className="text-sm mb-2 text-right">
+            {Object.entries(variables)
+              .map(([k, v]) => `${k}=${v}`)
+              .join(', ')}
+          </div>
+        )}
         <SpecialButtonProvider onSpecialClick={handleSpecialClick}>
           <OperationButtonProvider onOperationClick={handleOperatorClick}>
             <NumberButtonProvider onNumberClick={handleNumberClick}>
