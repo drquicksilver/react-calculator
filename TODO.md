@@ -25,7 +25,6 @@ Keeping the symbolic logic in `src/lib/symbolic` keeps the React UI focused only
 
 1. **Expression input and evaluation**
    - Add an `ExpressionInput` component above the keypad for typing expressions.
-   - Hook the parser and numeric evaluator into algebraic mode when `=` or `Enter` is pressed.
    - Include unit tests verifying that typed expressions like `2*(3+4)` evaluate correctly.
 2. **Variable support**
    - Extend the parser to recognise single-letter variables.
@@ -64,3 +63,4 @@ Each stage introduces new functionality visible to the user while keeping the im
 - Added algebraic/classic mode toggle with parentheses keys
 - Implemented custom arithmetic parser with unit tests
 - Added numeric evaluation of the AST with unit tests
+- Hooked parser and numeric evaluator into algebraic mode; '=' now evaluates typed expressions and displays parse errors

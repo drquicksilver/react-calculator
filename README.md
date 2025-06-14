@@ -16,7 +16,7 @@ top right of the app to try them. Available themes are:
 
 ### Modes
 
-Use the mode toggle at the top right to switch between **classic** and **algebraic** modes. Algebraic mode shows extra parentheses buttons and lets you type expressions like `1-(2×3)` directly in the display. These expressions are parsed with normal operator precedence. A numeric evaluator is available, but the UI does not call it yet.
+Use the mode toggle at the top right to switch between **classic** and **algebraic** modes. Algebraic mode shows extra parentheses buttons and lets you type expressions like `1-(2×3)` directly in the display. Press `=` to evaluate the typed expression; any parse errors will be shown in the display.
 
 ### Symbolic engine
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from './contexts/ThemeContext';
 import ThemeSwitcher from './components/ThemeSwitcher'; // Import ThemeSwitcher
 import { useMode } from './contexts/ModeContext';
@@ -12,6 +12,8 @@ import { OperationButtonProvider } from './components/OperationButtonProvider';
 import SpecialButton from './components/SpecialButton';
 import { SpecialButtonProvider } from './components/SpecialButtonProvider';
 import { Operation } from './types';
+import { evaluateExpression } from '@/lib/symbolic/evaluateExpression';
+import { ParseError } from '@/lib/symbolic/parser';
 
 // SVG Icon Components
 const PlusIcon = () => <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"></path></svg>;
@@ -52,7 +54,7 @@ export default function Home() {
           setDisplayValue((prev) => (prev === '0' ? value : prev + value));
           break;
         case '=':
-          // evaluation not implemented yet
+          handleEqualClick();
           break;
         default:
           // ignore other specials in algebraic mode for now
@@ -154,9 +156,18 @@ const operatorSymbols: Record<Operation, string> = {
     setWaitingForOperand(true);
   };
 
-  const handleEqualClick = () => {
+  const handleEqualClick = useCallback(() => {
     if (mode === 'algebraic') {
-      // evaluation will be implemented later
+      try {
+        const result = evaluateExpression(displayValue);
+        setDisplayValue(result.toString());
+      } catch (err) {
+        if (err instanceof ParseError) {
+          setDisplayValue(err.message);
+        } else {
+          setDisplayValue('Error');
+        }
+      }
       return;
     }
     const currentValue = parseFloat(displayValue);
@@ -179,7 +190,7 @@ const operatorSymbols: Record<Operation, string> = {
       // setWaitingForOperand(true); // Common behavior, can be false if we want to start a new calculation immediately
       setWaitingForOperand(true);
     }
-  };
+  }, [mode, displayValue, operator, previousValue]);
 
   const handleClearClick = () => {
     setDisplayValue("0");
@@ -210,6 +221,16 @@ const operatorSymbols: Record<Operation, string> = {
       setDisplayValue(displayValue + '.');
     }
   };
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && mode === 'algebraic') {
+        handleEqualClick();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [mode, displayValue, handleEqualClick]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
