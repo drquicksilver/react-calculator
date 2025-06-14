@@ -18,6 +18,8 @@ top right of the app to try them. Available themes are:
 
 Use the mode toggle at the top right to switch between **classic** and **algebraic** modes. Algebraic mode shows extra parentheses buttons and lets you type expressions like `1-(2×3)` directly in the display. Press `=` to evaluate the typed expression; any parse errors will be shown in the display.
 
+Algebraic mode now also supports single-letter variables. Assign values with `x=2` and reference them in later expressions like `x×3`. Assigned variables are listed below the display.
+
 ### Symbolic engine
 
 The groundwork for symbolic calculations has begun. `src/lib/symbolic/parser.ts`

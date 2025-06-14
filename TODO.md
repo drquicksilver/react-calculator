@@ -26,26 +26,22 @@ Keeping the symbolic logic in `src/lib/symbolic` keeps the React UI focused only
 1. **Expression input and evaluation**
    - Add an `ExpressionInput` component above the keypad for typing expressions.
    - Include unit tests verifying that typed expressions like `2*(3+4)` evaluate correctly.
-2. **Variable support**
-   - Extend the parser to recognise single-letter variables.
-   - Allow assignments such as `x=2` and reuse stored values in later expressions.
-   - Provide a simple display of defined variables.
-3. **Simplification routines** (`simplify.ts`)
+2. **Simplification routines** (`simplify.ts`)
    - Implement combining like terms and constant folding.
    - Add a `Simplify` button that shows the simplified form of the current expression.
-4. **Quadratic tools**
+3. **Quadratic tools**
    - Implement factoring of quadratic polynomials in `factor.ts`.
    - Add a routine for completing the square.
    - Surface these features through `Factor` and `Complete Square` buttons.
-5. **General factoring**
+4. **General factoring**
    - Extend `factor.ts` with routines for higher-order polynomials.
    - Provide user feedback when a polynomial cannot be factored over the rationals.
-6. **Equation solving** (`solve.ts`)
+5. **Equation solving** (`solve.ts`)
    - Handle linear and quadratic equations.
    - Provide a `Solve` button that outputs real solutions.
-7. **Enhanced display**
+6. **Enhanced display**
    - Switch algebraic mode to a three-line layout showing the input, the latest transformation, and the result.
-8. **History and step-by-step view**
+7. **History and step-by-step view**
    - Record each transformation so users can review how a result was derived.
    - Allow toggling a full log beneath the calculator.
 
@@ -64,3 +60,4 @@ Each stage introduces new functionality visible to the user while keeping the im
 - Implemented custom arithmetic parser with unit tests
 - Added numeric evaluation of the AST with unit tests
 - Hooked parser and numeric evaluator into algebraic mode; '=' now evaluates typed expressions and displays parse errors
+- Added single-letter variables with assignments and variable display
