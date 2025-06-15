@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { parse } from './parser';
 import { evaluate } from './evaluate';
 
-function evalExpr(expr: string): number {
-  return evaluate(parse(expr));
+function evalExpr(expr: string, env: Record<string, number> = {}): number {
+  return evaluate(parse(expr), env);
 }
 
 describe('evaluate', () => {
@@ -25,5 +25,12 @@ describe('evaluate', () => {
 
   it('evaluates mixed long expression', () => {
     expect(evalExpr('1+2×3-4÷5+6')).toBeCloseTo(1 + 2*3 - 4/5 + 6);
+  });
+
+  it('evaluates assignments and variable references', () => {
+    const env: Record<string, number> = {};
+    expect(evalExpr('x=2', env)).toBe(2);
+    expect(env.x).toBe(2);
+    expect(evalExpr('x+3', env)).toBe(5);
   });
 });

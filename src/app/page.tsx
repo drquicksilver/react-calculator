@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useTheme } from './contexts/ThemeContext';
@@ -11,6 +12,7 @@ import OperationButton from './components/OperationButton';
 import { OperationButtonProvider } from './components/OperationButtonProvider';
 import SpecialButton from './components/SpecialButton';
 import { SpecialButtonProvider } from './components/SpecialButtonProvider';
+import ExpressionInput from './components/ExpressionInput';
 import { Operation } from './types';
 import { evaluateExpression } from '@/lib/symbolic/evaluateExpression';
 import { ParseError } from '@/lib/symbolic/parser';
@@ -32,6 +34,7 @@ export default function Home() {
   const [previousValue, setPreviousValue] = useState<number | null>(null);
   const [operator, setOperator] = useState<Operation | null>(null);
   const [waitingForOperand, setWaitingForOperand] = useState<boolean>(false);
+  const [variables, setVariables] = useState<Record<string, number>>({});
   const { theme } = useTheme();
   const { mode } = useMode();
 
@@ -159,7 +162,9 @@ const operatorSymbols: Record<Operation, string> = {
   const handleEqualClick = useCallback(() => {
     if (mode === 'algebraic') {
       try {
-        const result = evaluateExpression(displayValue);
+        const vars = { ...variables };
+        const result = evaluateExpression(displayValue, vars);
+        setVariables(vars);
         setDisplayValue(result.toString());
       } catch (err) {
         if (err instanceof ParseError) {
@@ -190,7 +195,7 @@ const operatorSymbols: Record<Operation, string> = {
       // setWaitingForOperand(true); // Common behavior, can be false if we want to start a new calculation immediately
       setWaitingForOperand(true);
     }
-  }, [mode, displayValue, operator, previousValue]);
+  }, [mode, displayValue, operator, previousValue, variables]);
 
   const handleClearClick = () => {
     setDisplayValue("0");
@@ -240,49 +245,64 @@ const operatorSymbols: Record<Operation, string> = {
         <ThemeSwitcher />
       </div>
       <div className="calculator-container bg-white p-4 rounded shadow-lg w-80">
-        <div className="display bg-gray-200 text-right p-2 rounded mb-4 text-3xl h-20 flex items-center justify-end">
-          {displayValue}
-        </div>
+        {mode === 'algebraic' ? (
+          <ExpressionInput
+            value={displayValue}
+            onChange={setDisplayValue}
+            onEnter={handleEqualClick}
+          />
+        ) : (
+          <div className="display bg-gray-200 text-right p-2 rounded mb-4 text-3xl h-20 flex items-center justify-end">
+            {displayValue}
+          </div>
+        )}
+        {mode === 'algebraic' && Object.keys(variables).length > 0 && (
+          <div className="text-sm mb-2 text-right">
+            {Object.entries(variables)
+              .map(([k, v]) => `${k}=${v}`)
+              .join(', ')}
+          </div>
+        )}
         <SpecialButtonProvider onSpecialClick={handleSpecialClick}>
           <OperationButtonProvider onOperationClick={handleOperatorClick}>
             <NumberButtonProvider onNumberClick={handleNumberClick}>
               <div className="buttons-grid grid grid-cols-4 gap-2">
-                {/* Row 1 */}
+                {mode === 'algebraic' && (
+                  <>
+                    {/* Row 1 */}
+                    <SpecialButton value="(" />
+                    <SpecialButton value=")" />
+                    <NumberButton value="x" />
+                    <div className="invisible" />
+                  </>
+                )}
+                {/* Row 2 */}
                 <SpecialButton value="AC" />
                 <SpecialButton value="+/-" />
                 <SpecialButton value="%" />
                 <OperationButton operation={Operation.Divide} icon={<DivideIcon />} />
-          {/* Row 2 */}
+          {/* Row 3 */}
           <NumberButton value="7" />
           <NumberButton value="8" />
           <NumberButton value="9" />
                 <OperationButton operation={Operation.Multiply} icon={<MultiplyIcon />} />
-          {/* Row 3 */}
+          {/* Row 4 */}
           <NumberButton value="4" />
           <NumberButton value="5" />
           <NumberButton value="6" />
                 <OperationButton operation={Operation.Subtract} icon={<MinusIcon />} />
-          {/* Row 4 */}
+          {/* Row 5 */}
           <NumberButton value="1" />
           <NumberButton value="2" />
           <NumberButton value="3" />
                 <OperationButton operation={Operation.Add} icon={<PlusIcon />} />
-          {/* Row 5 */}
+          {/* Row 6 */}
           <NumberButton
             value="0"
             className={`col-span-2 ${theme === 'typewriter' ? 'justify-self-center' : ''}`}
           />
                 <SpecialButton value="." />
                 <SpecialButton value="=" className="bg-orange-400 hover:bg-orange-500 active:bg-orange-600 text-white" />
-                {mode === 'algebraic' && (
-                  <>
-                    {/* Row 6 */}
-                    <SpecialButton value="(" />
-                    <SpecialButton value=")" />
-                    <div className="invisible" />
-                    <div className="invisible" />
-                  </>
-                )}
               </div>
             </NumberButtonProvider>
           </OperationButtonProvider>
