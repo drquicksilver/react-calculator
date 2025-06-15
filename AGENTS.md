@@ -9,3 +9,4 @@
 - Commit messages should use imperative mood (e.g. "Add parser tests").
 - PR descriptions must summarise user-facing changes and include test results.
 - Add unit tests for new functionality and update `TODO.md` and `README.md` when relevant.
+- Ensure the calculator remains fully usable on touch devices without invoking the on-screen keyboard. Provide buttons for common variables like `x`.

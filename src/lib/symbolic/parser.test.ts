@@ -9,6 +9,14 @@ function binary(op: '+' | '-' | '×' | '÷', left: Expression, right: Expression
   return { type: 'binary', operator: op, left, right };
 }
 
+function variable(name: string): Expression {
+  return { type: 'variable', name };
+}
+
+function assignment(name: string, value: Expression): Expression {
+  return { type: 'assignment', name, value };
+}
+
 describe('parse', () => {
   it('parses simple addition', () => {
     expect(parse('1+2')).toEqual(binary('+', number(1), number(2)));
@@ -30,6 +38,14 @@ describe('parse', () => {
 
   it('parses decimal numbers', () => {
     expect(parse('1.5+2.25')).toEqual(binary('+', number(1.5), number(2.25)));
+  });
+
+  it('parses variable references', () => {
+    expect(parse('x')).toEqual(variable('x'));
+  });
+
+  it('parses assignments', () => {
+    expect(parse('x=2')).toEqual(assignment('x', number(2)));
   });
 
   it('parses long addition chain', () => {

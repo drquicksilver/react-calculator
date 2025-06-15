@@ -1,12 +1,15 @@
 import { Expression } from './parser';
 
-export function evaluate(expr: Expression): number {
+export function evaluate(
+  expr: Expression,
+  env: Record<string, number> = {}
+): number {
   switch (expr.type) {
     case 'number':
       return expr.value;
     case 'binary': {
-      const left = evaluate(expr.left);
-      const right = evaluate(expr.right);
+      const left = evaluate(expr.left, env);
+      const right = evaluate(expr.right, env);
       switch (expr.operator) {
         case '+':
           return left + right;
@@ -19,6 +22,15 @@ export function evaluate(expr: Expression): number {
         default:
           throw new Error('Unknown operator');
       }
+    }
+    case 'variable': {
+      if (expr.name in env) return env[expr.name];
+      throw new Error(`Undefined variable ${expr.name}`);
+    }
+    case 'assignment': {
+      const val = evaluate(expr.value, env);
+      env[expr.name] = val;
+      return val;
     }
     default:
       const _exhaustive: never = expr;

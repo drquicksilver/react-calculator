@@ -27,13 +27,36 @@ export interface BinaryExpression {
   right: Expression;
 }
 
-export type Expression = NumberLiteral | BinaryExpression;
+/**
+ * AST node for a variable reference.
+ */
+export interface Variable {
+  type: 'variable';
+  name: string;
+}
+
+/**
+ * AST node for an assignment expression.
+ */
+export interface Assignment {
+  type: 'assignment';
+  name: string;
+  value: Expression;
+}
+
+export type Expression =
+  | NumberLiteral
+  | BinaryExpression
+  | Variable
+  | Assignment;
 
 // Basic tokens
 const numberTok = token(regex(/\d+(?:\.\d+)?/)).map<NumberLiteral>(v => ({
   type: 'number',
   value: Number(v),
 }));
+const variableTok = token(regex(/[a-z]/i));
+const assign = token(str('='));
 const plus = token(str('+'));
 const minus = token(str('-'));
 const times = token(str('×'));
@@ -42,11 +65,12 @@ const lparen = token(str('('));
 const rparen = token(str(')'));
 
 // Forward declarations for recursive grammar
-const ExpressionP: Parser<Expression> = lazy(() => Sum);
+const ExpressionP: Parser<Expression> = lazy(() => AssignmentP.or(Sum));
 
-// factor: number | '(' Expression ')'
+// factor: number | variable | '(' Expression ')'
 const Factor: Parser<Expression> = numberTok
   .map(expr => expr as Expression)
+  .or(variableTok.map(name => ({ type: 'variable', name }) as Expression))
   .or(seq(lparen, ExpressionP, rparen).map(([, expr]) => expr));
 
 // term: Factor ( (× | ÷) Factor )*
@@ -70,6 +94,10 @@ const Sum: Parser<Expression> = seq(Term, many(seq(plus.or(minus), Term)))
       right,
     }), first);
   });
+
+// assignment: variable '=' Sum
+const AssignmentP: Parser<Expression> = seq(variableTok, assign, Sum)
+  .map(([name, , value]) => ({ type: 'assignment', name, value } as Expression));
 
 /**
  * Parse an arithmetic expression containing +, -, ×, ÷ and parentheses.
